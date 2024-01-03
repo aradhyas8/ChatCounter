@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "ChatGPT-4 Session Tracker",
+  "version": "1.0",
+  "description": "Track and monitor your ChatGPT-4 session message count and time limit across multiple tabs.",
+  "permissions": ["storage", "tabs", "<all_urls>", "webNavigation"], 
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.chatgpt-4.com/*"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
