@@ -2,9 +2,10 @@ let messageCount = 0;
 
 // Function to accurately count the number of messages
 const countMessages = () => {
-  // Assuming messages are contained within elements having 'chat-message' class
-  const messages = document.querySelectorAll(".chat-message");
-  messageCount = messages.length;
+  // Assuming user and ChatGPT messages have 'user-message' and 'gpt-message' classes respectively
+  const userMessages = document.querySelectorAll(".chat-message.user-message");
+  const gptMessages = document.querySelectorAll(".chat-message.gpt-message");
+  messageCount = userMessages.length + gptMessages.length;
   return messageCount;
 };
 
@@ -35,10 +36,7 @@ if (messageContainer) {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "initSession") {
-    // Reset the message count when initializing a new session
-    messageCount = 0;
-
-    // Re-count messages in case there are any present at the time of session initialization
-    countMessages();
+    // Accurately initialize message count with the current number of messages
+    messageCount = countMessages();
   }
 });
