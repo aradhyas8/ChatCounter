@@ -1,16 +1,17 @@
 let messageCount = 0;
 
-// Function to accurately count the number of messages
+// Function to accurately count the number of user messages
 const countMessages = () => {
-  // Assuming user and ChatGPT messages have 'user-message' and 'gpt-message' classes respectively
-  const userMessages = document.querySelectorAll(".chat-message.user-message");
-  const gptMessages = document.querySelectorAll(".chat-message.gpt-message");
-  messageCount = userMessages.length + gptMessages.length;
+  // Selecting messages sent by the user based on the data attribute
+  const userMessages = document.querySelectorAll(
+    'div data-message-author-role="user"'
+  );
+  messageCount = userMessages.length;
   return messageCount;
 };
 
 // MutationObserver to observe for new messages
-const messageContainerSelector = ".chat-interface"; // Assuming this is the container for chat messages
+const messageContainerSelector = ".react-scroll-to-bottom--css-erpbh-1n7m0yu";; // Update this if the container for chat messages is different
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.addedNodes.length) {
@@ -36,7 +37,6 @@ if (messageContainer) {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "initSession") {
-    // Accurately initialize message count with the current number of messages
-    messageCount = countMessages();
+    messageCount = countMessages(); // Accurately initialize message count with the current number of messages
   }
 });
